@@ -10,8 +10,8 @@ Use of this source code is governed by the MPL-2.0 license, see LICENSE.
 #include <boost/thread/mutex.hpp>
 #include <unitree_legged_msgs/HighCmd.h>
 #include <unitree_legged_msgs/HighState.h>
-#include "unitree_legged_sdk/unitree_legged_sdk.h"
-#include "aliengo_sdk/aliengo_sdk.hpp"
+#include <unitree_legged_sdk/unitree_legged_sdk.h>
+#include <aliengo_sdk/aliengo_sdk.hpp>
 #include "convert.h"
 
 // using namespace UNITREE_LEGGED_SDK;
