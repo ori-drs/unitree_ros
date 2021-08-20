@@ -22,7 +22,7 @@ template<typename TLCM>
 void* update_loop(void* param)
 {
     TLCM *data = (TLCM *)param;
-    while(ros::ok){
+    while(ros::ok()){
         data->Recv();
         usleep(2000);
     }
