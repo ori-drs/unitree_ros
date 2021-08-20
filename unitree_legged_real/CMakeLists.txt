@@ -7,12 +7,12 @@ set(CMAKE_CXX_FLAGS "-O3")
 
 find_package(catkin REQUIRED COMPONENTS
     roscpp
-    geometry_msgs
     unitree_legged_msgs
 )
 
 find_package(Eigen3 REQUIRED)
 
+find_package(aliengo_sdk CONFIG)
 find_package(unitree_legged_sdk REQUIRED)
 
 catkin_package()
@@ -22,8 +22,7 @@ include_directories(
     ${catkin_INCLUDE_DIRS}
 )
 
-
-if( $ENV{UNITREE_SDK_VERSION} STREQUAL "3_1")
+if(${aliengo_sdk_FOUND})  #  $ENV{UNITREE_SDK_VERSION} STREQUAL "3_1"
     include_directories($ENV{ALIENGO_SDK_PATH}/include)
     link_directories($ENV{ALIENGO_SDK_PATH}/lib)
     string(CONCAT LEGGED_SDK_NAME libaliengo_comm.so)
@@ -31,11 +30,11 @@ if( $ENV{UNITREE_SDK_VERSION} STREQUAL "3_1")
 
     add_definitions(-DSDK3_1)
 
-    add_executable(lcm_server_3_1 $ENV{ALIENGO_SDK_PATH}/examples/lcm_server.cpp)
-    target_link_libraries(lcm_server_3_1 ${EXTRA_LIBS} ${catkin_LIBRARIES})
-    add_dependencies(lcm_server_3_1 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#     add_executable(lcm_server_3_1 $ENV{ALIENGO_SDK_PATH}/examples/lcm_server.cpp)
+#     target_link_libraries(lcm_server_3_1 ${EXTRA_LIBS} ${catkin_LIBRARIES})
+#     add_dependencies(lcm_server_3_1 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
-elseif( $ENV{UNITREE_SDK_VERSION} STREQUAL "3_2")
+elseif(${unitree_legged_sdk_FOUND})  #  $ENV{UNITREE_SDK_VERSION} STREQUAL "3_2"
     include_directories($ENV{UNITREE_LEGGED_SDK_PATH}/include)
     link_directories($ENV{UNITREE_LEGGED_SDK_PATH}/lib)
     string(CONCAT LEGGED_SDK_NAME libunitree_legged_sdk_$ENV{UNITREE_PLATFORM}.so)
@@ -43,9 +42,9 @@ elseif( $ENV{UNITREE_SDK_VERSION} STREQUAL "3_2")
 
     add_definitions(-DSDK3_2)
 
-    add_executable(lcm_server_3_2 $ENV{UNITREE_LEGGED_SDK_PATH}/examples/lcm_server.cpp)
-    target_link_libraries(lcm_server_3_2 ${EXTRA_LIBS} ${catkin_LIBRARIES})
-    add_dependencies(lcm_server_3_2 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#     add_executable(lcm_server_3_2 $ENV{UNITREE_LEGGED_SDK_PATH}/examples/lcm_server.cpp)
+#     target_link_libraries(lcm_server_3_2 ${EXTRA_LIBS} ${catkin_LIBRARIES})
+#     add_dependencies(lcm_server_3_2 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 endif()
 
 add_executable(position_lcm src/exe/position_mode.cpp)
