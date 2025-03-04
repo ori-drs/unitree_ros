@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!-- 
+    Unitree-RealSense-Wrist-Mount
+-->
+<root xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:gazebo="http://playerstage.sourceforge.net/gazebo/xmlschema/#gz"
+    xmlns:model="http://playerstage.sourceforge.net/gazebo/xmlschema/#model"
+    xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+    xmlns:body="http://playerstage.sourceforge.net/gazebo/xmlschema/#body"
+    xmlns:geom="http://playerstage.sourceforge.net/gazebo/xmlschema/#geom"
+    xmlns:joint="http://playerstage.sourceforge.net/gazebo/xmlschema/#joint"
+    xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+    xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+    xmlns:rendering="http://playerstage.sourceforge.net/gazebo/xmlschema/#rendering"
+    xmlns:renderable="http://playerstage.sourceforge.net/gazebo/xmlschema/#renderable"
+    xmlns:physics="http://playerstage.sourceforge.net/gazebo/xmlschema/#physics"
+    xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:macro name="z1_realsense_wrist_mount">
+        <!--
+    The following transforms are approximate and require further calibration.
+    
+    We will replace these with properly aligned transforms once we have them.
+    -->
+        <!-- unitree -->
+        <joint name="hand_to_z1_realsense_mount_joint" type="fixed">
+            <origin xyz="0.0365 0.0 0.0" rpy="0.0 0.0 0.0" /> <!-- this needs tuning! -->
+            <parent link="link06" />
+            <child link="z1_realsense_mount" />
+        </joint>
+
+        <link name="z1_realsense_mount">
+            <visual>
+                <origin xyz="0.0 0.0 0.0" rpy="-1.5708 0.0 3.1416" /> <!-- rotate model to match
+                unitree TF convention -->
+                <geometry>
+                    <mesh
+                        filename="package://z1_description/meshes/z1-realsense-mount.dae" />
+                </geometry>
+            </visual>
+        </link>
+
+        <!-- add RealSense D435i (the mesh is actually the non-IMU version) -->
+        <xacro:property name="simulation" value="true" />
+        <xacro:include filename="$(find realsense2_description)/urdf/_d435i.urdf.xacro" />
+        <xacro:sensor_d435i name="wrist_camera" parent="z1_realsense_mount"
+            use_nominal_extrinsics="${simulation}">
+            <origin xyz="0.008 0.0 0.0375" rpy="0.0 0.0 0.0" /> <!-- screw holes line up, but may
+            need further calibration -->
+        </xacro:sensor_d435i>
+
+        <!-- Simulated Realsense -->
+        <xacro:include
+            filename="$(find z1_description)/xacro/realsense_d435.gazebo" />
+
+        <!-- Add front camera -->
+        <xacro:realsense_d435_gazebo name="wrist_camera">
+            <origin xyz="0 0 0" rpy="0 0 0" />
+        </xacro:realsense_d435_gazebo>
+    </xacro:macro>
+</root>

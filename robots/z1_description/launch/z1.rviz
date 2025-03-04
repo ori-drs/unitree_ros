@@ -4,9 +4,6 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /Global Options1
-        - /Status1
-        - /RobotModel1
         - /TF1
         - /TF1/Frames1
       Splitter Ratio: 0.6125907897949219
@@ -434,7 +431,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 0.7884737849235535
+      Distance: 0.5516418814659119
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -442,17 +439,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: -0.10866759717464447
-        Y: -0.04490363597869873
-        Z: 0.22965772449970245
+        X: -0.021281680092215538
+        Y: 0.05418281629681587
+        Z: 0.2159574180841446
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.09479764848947525
+      Pitch: 0.34039950370788574
       Target Frame: <Fixed Frame>
-      Yaw: 1.1035622358322144
+      Yaw: 0.9885754585266113
     Saved: ~
 Window Geometry:
   Displays:

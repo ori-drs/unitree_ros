@@ -1,0 +1,65 @@
+# Joint state publisher
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 1000
+
+# Arm joint controllers
+Joint01_controller:
+  type: unitree_legged_control/UnitreeJointController
+  joint: joint1
+  pid: { p: 300.0, i: 0.0, d: 5.0 }
+
+Joint02_controller:
+  type: unitree_legged_control/UnitreeJointController
+  joint: joint2
+  pid: { p: 300.0, i: 0.0, d: 5.0 }
+
+Joint03_controller:
+  type: unitree_legged_control/UnitreeJointController
+  joint: joint3
+  pid: { p: 300.0, i: 0.0, d: 5.0 }
+
+Joint04_controller:
+  type: unitree_legged_control/UnitreeJointController
+  joint: joint4
+  pid: { p: 300.0, i: 0.0, d: 5.0 }
+
+Joint05_controller:
+  type: unitree_legged_control/UnitreeJointController
+  joint: joint5
+  pid: { p: 300.0, i: 0.0, d: 5.0 }
+
+Joint06_controller:
+  type: unitree_legged_control/UnitreeJointController
+  joint: joint6
+  pid: { p: 300.0, i: 0.0, d: 5.0 }
+
+# Unitree gripper controller
+unitree_gripper_controller:
+  type: unitree_legged_control/UnitreeJointController
+  joint: jointGripper
+  pid: { p: 300.0, i: 0.0, d: 5.0 }
+
+# Robotiq position controller
+robotiq_finger_position_controller:
+  type: position_controllers/JointPositionController
+  joint: finger_joint
+  pid:
+    d: 0
+    i: 0
+    p: 10
+
+# Robotiq gripper controller (action server)
+robotiq_gripper_controller:
+  type: position_controllers/GripperActionController
+  joint: finger_joint
+  action_monitor_rate: 20
+  goal_tolerance: 0.002
+  max_effort: 100
+  stall_velocity_threshold: 0.001
+  stall_timeout: 1.0
+  joint_position_closed: 0.7 # in radians
+  joint_position_open: 0.0 # in radians
+  min_gap: 0.0 # in m
+  max_gap: 0.14 # in m
+  action_server_name: "/gripper_as"

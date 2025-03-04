@@ -1,0 +1,77 @@
+<launch>
+    <arg name="environment_data_package" default="(find gazebo_worlds_drs)" />
+    <arg name="environment_config" default="empty" />
+    <arg name="robot_path" value="(find z1_description)" />
+    <arg name="dollar" value="$" />
+
+    <arg name="paused" default="true" />
+    <arg name="use_sim_time" default="true" />
+    <arg name="gui" default="true" />
+    <arg name="headless" default="false" />
+    <arg name="debug" default="false" />
+    <!-- Debug mode will hung up the robot, use "true" or "false" to switch it. -->
+    <arg name="user_debug" default="false" />
+
+    <arg name="unitree_gripper" default="true" />
+    <arg name="robotiq_gripper" default="false" />
+    <arg name="realsense" default="true" />
+    <arg name="arm_ns" default="z1_gazebo" />
+    <!-- note: sim_ctrl expects arm namespace /z1_gazebo; TODO: add namespace arg for sim_ctrl -->
+    <arg name="sim" default="true" />
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name"
+            value="$(arg dollar)$(arg environment_data_package)/worlds/$(arg environment_config).world" />
+        <arg name="debug" value="$(arg debug)" />
+        <arg name="gui" value="$(arg gui)" />
+        <arg name="paused" value="$(arg paused)" />
+        <arg name="use_sim_time" value="$(arg use_sim_time)" />
+        <arg name="headless" value="$(arg headless)" />
+    </include>
+
+    <arg name="unitree_description_name" value="/$(arg arm_ns)/robot_description" />
+
+    <!-- Load the URDF into the ROS Parameter Server -->
+    <param name="/$(arg unitree_description_name)"
+        command="$(find xacro)/xacro --inorder '$(arg dollar)$(arg robot_path)/xacro/z1_standalone.xacro' 
+           unitree_gripper:=$(arg unitree_gripper) robotiq_gripper:=$(arg robotiq_gripper) realsense:=$(arg realsense) arm_ns:=$(arg arm_ns) sim:=$(arg sim)" />
+
+    <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
+    <!-- Set trunk and joint positions at startup -->
+    <node pkg="gazebo_ros" type="spawn_model" name="urdf_spawner" respawn="false" output="screen"
+        args="-urdf -z 0.0 -model $(arg arm_ns) -param $(arg unitree_description_name) -unpause" />
+
+    <!-- Load joint controller configurations from YAML file to parameter server -->
+    <rosparam file="$(arg dollar)$(arg robot_path)/config/drs_z1_control.yaml" command="load"
+        ns="/$(arg arm_ns)" />
+
+    <!-- load the controllers -->
+    <node pkg="controller_manager" type="spawner" name="arm_controller_spawner" respawn="false"
+        output="screen" ns="/$(arg arm_ns)"
+        args="joint_state_controller 
+        Joint01_controller Joint02_controller Joint03_controller
+        Joint04_controller Joint05_controller Joint06_controller">
+        <remap from="robot_description" to="$(arg unitree_description_name)" />
+    </node>
+
+    <group if="$(arg unitree_gripper)">
+        <node name="gripper_controller_spawner" pkg="controller_manager" type="spawner"
+            respawn="false" output="screen" ns="/$(arg arm_ns)" args="unitree_gripper_controller">
+            <remap from="robot_description" to="$(arg unitree_description_name)" />
+        </node>
+    </group>
+
+    <group if="$(arg robotiq_gripper)">
+        <node name="gripper_controller_spawner" pkg="controller_manager" type="spawner"
+            respawn="false" output="screen" ns="/$(arg arm_ns)" args="robotiq_gripper_controller">
+            <remap from="robot_description" to="$(arg unitree_description_name)" />
+        </node>
+    </group>
+
+    <!-- convert joint states to TF transforms for rviz, etc -->
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"
+        respawn="false" output="screen" ns="/$(arg arm_ns)">
+        <remap from="robot_description" to="$(arg unitree_description_name)" />
+    </node>
+
+</launch>

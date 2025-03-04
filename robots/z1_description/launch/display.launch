@@ -1,0 +1,26 @@
+<launch>
+
+    <arg name="arm_root" default="root" />
+    <arg name="unitree_gripper" default="true" />
+    <arg name="robotiq_gripper" default="false" />
+    <arg name="realsense" default="true" />
+    <arg name="arm_ns" default="z1_gazebo" />
+
+    <param name="robot_description"
+        command="$(find xacro)/xacro --inorder '$(find z1_description)/xacro/z1_standalone.xacro'
+        arm_root:=$(arg arm_root) unitree_gripper:=$(arg unitree_gripper) robotiq_gripper:=$(arg robotiq_gripper) realsense:=$(arg realsense) arm_ns:=$(arg arm_ns)" />
+
+    <!-- send fake joint values -->
+    <node pkg="joint_state_publisher_gui" type="joint_state_publisher_gui"
+        name="joint_state_publisher_gui">
+        <param name="use_gui" value="TRUE" />
+    </node>
+
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+        <param name="publish_frequency" type="double" value="1000.0" />
+    </node>
+
+    <node pkg="rviz" type="rviz" name="rviz" respawn="false" output="screen"
+        args="-d $(find z1_description)/launch/z1.rviz" />
+
+</launch>
