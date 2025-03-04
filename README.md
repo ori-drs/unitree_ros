@@ -5,7 +5,7 @@ Here are the ROS simulation packages for Unitree robots, You can load robots and
 Robot description:
 * `a1_description`
 * `aliengo_description`
-* `aliengoZ1_description`
+* `aliengoz1_description`
 * `b1_description`
 * `b2_description`
 * `b2w_description`

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<robot name="aliengoZ1_description" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="aliengoz1_description" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
     <xacro:include filename="$(find aliengo_description)/xacro/const.xacro"/>
 
