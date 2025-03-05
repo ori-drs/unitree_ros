@@ -16,7 +16,9 @@
     <arg name="robotiq_gripper" default="false" />
     <arg name="realsense" default="true" />
     <arg name="arm_ns" default="z1_gazebo" />
-    <!-- note: sim_ctrl expects arm namespace /z1_gazebo; TODO: add namespace arg for sim_ctrl -->
+    <!-- note: by default, sim_ctrl expects arm namespace /z1_gazebo; -->
+    <!-- ori-drs branch of z1_controller allows changing sim_ctrl namespace as a command line arg -->
+    <!-- e.g. "./sim_ctrl /z1 k" -->
     <arg name="sim" default="true" />
 
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
