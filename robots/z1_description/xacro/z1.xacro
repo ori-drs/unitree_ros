@@ -330,7 +330,7 @@
             </gazebo>
 
             <xacro:if value="${realsense}">
-                <xacro:z1_realsense_wrist_mount />
+                <xacro:z1_realsense_wrist_mount robot_namespace="${robot_namespace}" sim="${sim}" />
             </xacro:if>
         </xacro:if>
 
@@ -417,7 +417,8 @@
                 <!-- Insert Realsense -->
                 <!-- add RealSense D435i (the mesh is actually the non-IMU version) -->
                 <xacro:include filename="$(find realsense2_description)/urdf/_d435i.urdf.xacro" />
-                <xacro:sensor_d435i name="wrist_camera" parent="robotiq_arg2f_base_link"
+                <xacro:sensor_d435i name="${robot_namespace}/wrist_camera"
+                    parent="robotiq_arg2f_base_link"
                     use_nominal_extrinsics="${sim}">
                     <!-- XYZ NEEDS TUNING -->
                     <origin xyz="0.02 0 0.0465" rpy="${pi} -${pi/2} 0" />
@@ -425,7 +426,7 @@
 
                 <!-- Simulated Realsense -->
                 <xacro:include filename="$(find z1_description)/xacro/realsense_d435.gazebo" />
-                <xacro:realsense_d435_gazebo name="wrist_camera">
+                <xacro:realsense_d435_gazebo name="${robot_namespace}/wrist_camera">
                     <origin xyz="0 0 0" rpy="0 0 0" />
                 </xacro:realsense_d435_gazebo>
             </xacro:if>

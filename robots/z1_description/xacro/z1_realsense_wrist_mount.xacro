@@ -16,7 +16,7 @@
     xmlns:physics="http://playerstage.sourceforge.net/gazebo/xmlschema/#physics"
     xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-    <xacro:macro name="z1_realsense_wrist_mount">
+    <xacro:macro name="z1_realsense_wrist_mount" params="robot_namespace:=z1_gazebo sim:=false">
         <!--
     The following transforms are approximate and require further calibration.
     
@@ -41,10 +41,9 @@
         </link>
 
         <!-- add RealSense D435i (the mesh is actually the non-IMU version) -->
-        <xacro:property name="simulation" value="true" />
         <xacro:include filename="$(find realsense2_description)/urdf/_d435i.urdf.xacro" />
-        <xacro:sensor_d435i name="wrist_camera" parent="z1_realsense_mount"
-            use_nominal_extrinsics="${simulation}">
+        <xacro:sensor_d435i name="${robot_namespace}/wrist_camera" parent="z1_realsense_mount"
+            use_nominal_extrinsics="${sim}">
             <origin xyz="0.008 0.0 0.0375" rpy="0.0 0.0 0.0" /> <!-- screw holes line up, but may
             need further calibration -->
         </xacro:sensor_d435i>
@@ -54,7 +53,7 @@
             filename="$(find z1_description)/xacro/realsense_d435.gazebo" />
 
         <!-- Add front camera -->
-        <xacro:realsense_d435_gazebo name="wrist_camera">
+        <xacro:realsense_d435_gazebo name="${robot_namespace}/wrist_camera">
             <origin xyz="0 0 0" rpy="0 0 0" />
         </xacro:realsense_d435_gazebo>
     </xacro:macro>
