@@ -58,7 +58,7 @@
 
     <group if="$(arg unitree_gripper)">
         <node name="gripper_controller_spawner" pkg="controller_manager" type="spawner"
-            respawn="false" output="screen" ns="/$(arg arm_ns)" args="unitree_gripper_controller">
+            respawn="false" output="screen" ns="/$(arg arm_ns)" args="gripper_controller">
             <remap from="robot_description" to="$(arg unitree_description_name)" />
         </node>
     </group>

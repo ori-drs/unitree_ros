@@ -35,7 +35,7 @@ Joint06_controller:
   pid: { p: 300.0, i: 0.0, d: 5.0 }
 
 # Unitree gripper controller
-unitree_gripper_controller:
+gripper_controller:
   type: unitree_legged_control/UnitreeJointController
   joint: jointGripper
   pid: { p: 300.0, i: 0.0, d: 5.0 }
