@@ -338,7 +338,7 @@
             <link name="Adapter_Sleeve_Robotiq">
                 <visual>
                     <!-- Approximate -->
-                    <origin xyz="0 0 0" rpy="0 0 0.4" />
+                    <origin xyz="0 0 0" rpy="0 0 ${22.5*2*pi/360}" />
                     <geometry>
                         <mesh
                             filename="package://z1_description/meshes/Z1-Robotiq_Adapter_Plate.stl"
@@ -357,7 +357,8 @@
             </link>
 
             <joint name="link6_to_adapter_sleeve" type="fixed">
-                <origin xyz="0.044 0 0" rpy="${pi/2} 0 -${pi/2}" />
+                <origin xyz="0.044 0 0" rpy="${pi/2} -${22.5*2*pi/360} -${pi/2}" /> <!-- 22.5 degree
+                rotational offset to match real arm -->
                 <parent link="link06" />
                 <child link="Adapter_Sleeve_Robotiq" />
             </joint>
