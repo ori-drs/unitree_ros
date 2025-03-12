@@ -335,7 +335,7 @@
         </xacro:if>
 
         <xacro:if value="${robotiq_gripper}">
-            <link name="Adapter_Sleeve_Robotiq">
+            <link name="adapter_sleeve_robotiq">
                 <visual>
                     <!-- Approximate -->
                     <origin xyz="0 0 0" rpy="0 0 ${22.5*2*pi/360}" />
@@ -351,7 +351,7 @@
                 <collision>
                     <origin xyz="0 0 ${-0.02/2}" rpy="0 0 0" />
                     <geometry>
-                        <cylinder length="0.02" radius="0.045" />
+                        <cylinder length="0.02" radius="0.0445" />
                     </geometry>
                 </collision>
             </link>
@@ -360,19 +360,59 @@
                 <origin xyz="0.044 0 0" rpy="${pi/2} -${22.5*2*pi/360} -${pi/2}" /> <!-- 22.5 degree
                 rotational offset to match real arm -->
                 <parent link="link06" />
-                <child link="Adapter_Sleeve_Robotiq" />
+                <child link="adapter_sleeve_robotiq" />
             </joint>
-            <gazebo reference="Adapter_Sleeve_Robotiq">
+            <gazebo reference="adapter_sleeve_robotiq">
                 <material>Gazebo/Grey</material>
             </gazebo>
 
+            <joint name="adapter_sleeve_to_wrist_spacer" type="fixed">
+                <origin xyz="0 0 -0.0202" rpy="0 0 0" />
+                <parent link="adapter_sleeve_robotiq" />
+                <child link="robotiq_wrist_spacer" />
+            </joint>
+
+            <xacro:property name="spacer_length" value="0.015" />
+            <!-- Robotiq Wrist Spacer -->
+            <link name="robotiq_wrist_spacer">
+                <visual>
+                    <origin xyz="0 0 -${spacer_length/2}" rpy="0 0 0" />
+                    <geometry>
+                        <cylinder length="${spacer_length}" radius="0.0445" />
+                    </geometry>
+                    <material name="black">
+                        <color rgba="${0/255} ${0/255} ${0/255} 1" />
+                    </material>
+                </visual>
+                <collision>
+                    <origin xyz="0 0 -${spacer_length/2}" rpy="0 0 0" />
+                    <geometry>
+                        <cylinder length="${spacer_length}" radius="0.045" />
+                    </geometry>
+                </collision>
+            </link>
+
             <!-- Robotiq Force Torque FT 300-->
             <xacro:include filename="$(find robotiq_ft_sensor)/urdf/robotiq_ft300.urdf.xacro" />
-            <xacro:robotiq_ft300 parent="Adapter_Sleeve_Robotiq" prefix=""
+            <xacro:robotiq_ft300 parent="robotiq_wrist_spacer" prefix=""
                 gazebo="${sim}" ft_topic="${robot_namespace}/robotiq_ft_wrench">
                 <!-- XYZ NEEDS TUNING -->
-                <origin xyz="0 0 -0.02" rpy="${pi} 0 -${pi/2}" />
+                <origin xyz="0 0 ${-spacer_length+0.004}" rpy="${pi} 0 -${pi/2}" />
             </xacro:robotiq_ft300>
+
+            <!-- <link name="test" />
+            <joint name="test_joint" type="fixed">
+                <parent link="adapter_sleeve_robotiq" />
+                <child link="test" />
+                <origin xyz="0 0 -0.163" rpy="0 0 0" />
+            </joint>
+
+            <link name="test2" />
+            <joint name="test2_joint" type="fixed">
+                <parent link="test" />
+                <child link="test2" />
+                <origin xyz="0 0.03 0" rpy="0 0 0" />
+            </joint> -->
 
             <!-- Robotiq 2F140 -->
             <xacro:include
@@ -422,7 +462,7 @@
                     parent="robotiq_arg2f_base_link"
                     use_nominal_extrinsics="${sim}">
                     <!-- XYZ NEEDS TUNING -->
-                    <origin xyz="0.02 0 0.0465" rpy="${pi} -${pi/2} 0" />
+                    <origin xyz="0.018 0 0.049" rpy="${pi} -${pi/2} 0" />
                 </xacro:sensor_d435i>
 
                 <!-- Simulated Realsense -->
