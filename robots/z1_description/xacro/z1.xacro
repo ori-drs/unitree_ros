@@ -332,6 +332,14 @@
             <xacro:if value="${realsense}">
                 <xacro:z1_realsense_wrist_mount robot_namespace="${robot_namespace}" sim="${sim}" />
             </xacro:if>
+
+            <!-- End-effector link to match unitree gripper convention (x-axis forward) -->
+            <link name="end_effector" />
+            <joint name="gripper_to_end_effector" type="fixed">
+                <origin xyz="0.135 0 0" rpy="0 0 0" />
+                <parent link="gripperStator" />
+                <child link="end_effector" />
+            </joint>
         </xacro:if>
 
         <xacro:if value="${robotiq_gripper}">

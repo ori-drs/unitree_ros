@@ -78,7 +78,7 @@
     <xacro:property name="L05_Izz" value="0.00053860"/>
 
     <!-- Link 06 -->
-    <!-- <xacro:property name="L06_Mass" value="0.28875807"/>
+    <xacro:property name="L06_Mass" value="0.28875807"/>
     <xacro:property name="L06_ComX" value="0.02415690"/>
     <xacro:property name="L06_ComY" value="-0.00017355"/>
     <xacro:property name="L06_ComZ" value="-0.00143876"/>
@@ -87,10 +87,10 @@
     <xacro:property name="L06_Ixz" value="0.00000054"/>
     <xacro:property name="L06_Iyy" value="0.00014750"/>
     <xacro:property name="L06_Iyz" value="0.00000008"/>
-    <xacro:property name="L06_Izz" value="0.00014680"/> -->
+    <xacro:property name="L06_Izz" value="0.00014680"/>
 
     <!-- Increased intertias for sim stability -->
-    <xacro:property name="L06_Mass" value="0.28875807"/>
+    <!-- <xacro:property name="L06_Mass" value="0.28875807"/>
     <xacro:property name="L06_ComX" value="0.02415690"/>
     <xacro:property name="L06_ComY" value="-0.00017355"/>
     <xacro:property name="L06_ComZ" value="-0.00143876"/>
@@ -99,10 +99,10 @@
     <xacro:property name="L06_Ixz" value="0.0000027"/>
     <xacro:property name="L06_Iyy" value="0.00075"/>
     <xacro:property name="L06_Iyz" value="0.0000004"/>
-    <xacro:property name="L06_Izz" value="0.00075"/>
+    <xacro:property name="L06_Izz" value="0.00075"/> -->
 
     <!-- Link Gripper Stator -->
-    <!-- <xacro:property name="GripperStator_Mass" value="0.52603655"/>
+    <xacro:property name="GripperStator_Mass" value="0.52603655"/>
     <xacro:property name="GripperStator_ComX" value="0.04764427"/>
     <xacro:property name="GripperStator_ComY" value="-0.00035819"/>
     <xacro:property name="GripperStator_ComZ" value="-0.00249162"/>
@@ -111,10 +111,10 @@
     <xacro:property name="GripperStator_Ixz" value="0.00007662"/>
     <xacro:property name="GripperStator_Iyy" value="0.00068614"/>
     <xacro:property name="GripperStator_Iyz" value="0.00000209"/>
-    <xacro:property name="GripperStator_Izz" value="0.00066293"/> -->
+    <xacro:property name="GripperStator_Izz" value="0.00066293"/>
 
     <!-- Increased intertias for sim stability -->
-    <xacro:property name="GripperStator_Mass" value="0.52603655"/>
+    <!-- <xacro:property name="GripperStator_Mass" value="0.52603655"/>
     <xacro:property name="GripperStator_ComX" value="0.04764427"/>
     <xacro:property name="GripperStator_ComY" value="-0.00035819"/>
     <xacro:property name="GripperStator_ComZ" value="-0.00249162"/>
@@ -123,7 +123,7 @@
     <xacro:property name="GripperStator_Ixz" value="0.0007662"/>
     <xacro:property name="GripperStator_Iyy" value="0.0068614"/>
     <xacro:property name="GripperStator_Iyz" value="0.0000209"/>
-    <xacro:property name="GripperStator_Izz" value="0.0066293"/>
+    <xacro:property name="GripperStator_Izz" value="0.0066293"/> -->
 
     <!-- Link Gripper Mover -->
     <!-- <xacro:property name="GripperMover_Mass" value="0.27621302"/>
